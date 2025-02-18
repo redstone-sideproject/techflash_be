@@ -1,4 +1,10 @@
-import { Controller, Post, Body, BadRequestException } from '@nestjs/common'
+import {
+  Controller,
+  Post,
+  Get,
+  Body,
+  BadRequestException,
+} from '@nestjs/common'
 import { StudyCardService } from '@src/study-card/study-card.service'
 
 @Controller('study-card')
@@ -11,5 +17,10 @@ export class StudyCardController {
       throw new BadRequestException('Question field is required')
     }
     return await this.studyCardService.getStudyCard(question)
+  }
+
+  @Get()
+  async test() {
+    return await this.studyCardService.testRedis()
   }
 }

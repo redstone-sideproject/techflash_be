@@ -1,4 +1,5 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common'
+import { RedisCustomService } from '@src/redis/redis-custom.service'
 
 import { HttpService } from '@nestjs/axios'
 import { ConfigService } from '@nestjs/config'
@@ -12,7 +13,12 @@ export class StudyCardService {
   constructor(
     private readonly httpService: HttpService,
     private readonly configService: ConfigService,
+    private readonly redisCustomService: RedisCustomService,
   ) {}
+
+  async testRedis() {
+    return this.redisCustomService.set()
+  }
 
   async getStudyCard(question: string) {
     const URL = this.configService.get<string>('FASTAPI_URL')
