@@ -18,16 +18,21 @@ export class StudyCardService {
     private readonly openAiService: OpenAiService,
   ) {}
 
-  async testRedis() {
-    return this.redisCustomService.set()
-  }
-  async testOpenAI(question: string) {
-    return this.openAiService.generateEmbedding(question)
-  }
-
   async getStudyCard(question: string) {
     const URL = this.configService.get<string>('FASTAPI_URL')
     try {
+      // openAI API를 통해 질문 임베딩
+      const embeddingQuestion =
+        await this.openAiService.generateEmbedding(question)
+      console.log('embedding')
+
+      // 임베딩 값으로 Redis에서 유사한 질문 검색
+      const cachedAnswer =
+        await this.redisCustomService.findSimilarQuestion(embeddingQuestion)
+      if (cachedAnswer) return cachedAnswer
+      console.log('similar')
+
+      // fastAPI로 질문 생성
       const { data } = await firstValueFrom(
         this.httpService
           .post<TLearningCardResponse>(`${URL}/v1/ask`, { question })
@@ -41,9 +46,18 @@ export class StudyCardService {
             }),
           ),
       )
+      console.log('fastapi')
+
+      // redis에 저장
+      await this.redisCustomService.saveQuestion(
+        question,
+        embeddingQuestion,
+        data,
+      )
 
       return data
     } catch (_error) {
+      console.error(_error)
       throw new HttpException(
         {
           message: 'Failed to fetch study card',
