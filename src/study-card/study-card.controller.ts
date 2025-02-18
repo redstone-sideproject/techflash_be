@@ -23,4 +23,9 @@ export class StudyCardController {
   async test() {
     return await this.studyCardService.testRedis()
   }
+
+  @Post('/embedding')
+  async testEmbedding(@Body('question') question: string) {
+    return await this.studyCardService.testOpenAI(question)
+  }
 }

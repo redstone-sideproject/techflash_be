@@ -1,5 +1,6 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common'
 import { RedisCustomService } from '@src/redis/redis-custom.service'
+import { OpenAiService } from '@src/open-ai/open-ai.service'
 
 import { HttpService } from '@nestjs/axios'
 import { ConfigService } from '@nestjs/config'
@@ -14,10 +15,14 @@ export class StudyCardService {
     private readonly httpService: HttpService,
     private readonly configService: ConfigService,
     private readonly redisCustomService: RedisCustomService,
+    private readonly openAiService: OpenAiService,
   ) {}
 
   async testRedis() {
     return this.redisCustomService.set()
+  }
+  async testOpenAI(question: string) {
+    return this.openAiService.generateEmbedding(question)
   }
 
   async getStudyCard(question: string) {

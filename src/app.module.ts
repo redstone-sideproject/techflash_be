@@ -4,6 +4,7 @@ import { AppService } from './app.service'
 import { ConfigModule } from '@nestjs/config'
 import { StudyCardModule } from './study-card/study-card.module'
 import { RedisCustomModule } from '@src/redis/redis-custom.module'
+import { OpenAiModule } from './open-ai/open-ai.module'
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { RedisCustomModule } from '@src/redis/redis-custom.module'
     }),
     StudyCardModule,
     RedisCustomModule,
+    OpenAiModule,
   ],
   controllers: [AppController],
   providers: [AppService],
