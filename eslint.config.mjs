@@ -33,9 +33,14 @@ export default tseslint.config(
           endOfLine: 'auto',
         },
       ],
+      '@typescript-eslint/no-unused-vars': [
+        'off',
+        { varsIgnorePattern: '^_', argsIgnorePattern: '^_' },
+      ],
       '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/no-floating-promises': 'off',
       '@typescript-eslint/no-unsafe-argument': 'off',
+      '@typescript-eslint/no-unsafe-assignment': 'off',
     },
   },
 )
