@@ -10,4 +10,6 @@ COPY . .
 
 RUN yarn run build
 
+RUN npm install -g pm2
+
 CMD ["pm2-runtime", "start", "npm", "--name", "'nest-app'", "--","run", "start:prod"]
