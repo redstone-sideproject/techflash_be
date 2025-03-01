@@ -35,7 +35,7 @@ export class StudyCardService {
       // fastAPI로 질문 생성
       const { data } = await firstValueFrom(
         this.httpService
-          .post<TLearningCardResponse>(`${URL}/v1/ask`, { question })
+          .post<TLearningCardResponse>(`${URL}/ask/`, { question })
           .pipe(
             catchError((error: AxiosError) => {
               const status =
