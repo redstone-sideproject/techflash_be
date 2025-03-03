@@ -5,6 +5,7 @@ import { ConfigModule } from '@nestjs/config'
 import { StudyCardModule } from './study-card/study-card.module'
 import { RedisCustomModule } from '@src/redis/redis-custom.module'
 import { OpenAiModule } from './open-ai/open-ai.module'
+import { LoggerModule } from './logger/logger.module'
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { OpenAiModule } from './open-ai/open-ai.module'
     StudyCardModule,
     RedisCustomModule,
     OpenAiModule,
+    LoggerModule,
   ],
   controllers: [AppController],
   providers: [AppService],
