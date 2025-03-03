@@ -14,8 +14,6 @@ export class RedisCustomService {
   async findSimilarQuestion(
     embeddingQuestion: number[],
   ): Promise<TLearningCardResponse | null> {
-    console.log('start similar')
-
     const embeddingBuffer = Buffer.from(
       new Float32Array(embeddingQuestion).buffer,
     )
@@ -45,7 +43,6 @@ export class RedisCustomService {
       answer: JSON.parse(result[2][3]) as TLearningCardResponse,
     }
 
-    console.log(parsedResult)
     if (parsedResult.score < 0.3) {
       return parsedResult.answer
     }
